@@ -3,7 +3,7 @@
 // Structure to store guest details
 struct Guest {
     char name[50];
-    char phoneNumber[15];
+    char PhoneNumber[15];
     char governmentId[20];
 };
 
@@ -17,7 +17,7 @@ void initializeRooms(int acRooms[], int nonAcRooms[], int totalRooms) {
 
 // Function to display menu
 void displayMenu() {
-    printf("\n===== Hotel Management System =====\n");
+    printf("\n===== Welcome To Engineer's Hotel =====\n");
     printf("1. Check-In\n");
     printf("2. Check-Out\n");
     printf("3. Display Available Rooms\n");
@@ -25,8 +25,10 @@ void displayMenu() {
 }
 
 // Function to perform check-in
+// Function to perform check-in
 void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomType) {
     int roomNumber = -1;
+    int numGuests;
 
     // Find the first available room
     for (int i = 0; i < 5; i++) {
@@ -48,9 +50,57 @@ void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTyp
         printf("Enter your phone number: ");
         scanf("%s", guests[roomNumber - 1].phoneNumber);
 
-        printf("Enter your 12-digit Adhar Card No: ");
+        printf("Enter your 16-digit government ID: ");
         scanf("%s", guests[roomNumber - 1].governmentId);
 
+        // Check the number of guests accompanying
+        printf("Enter the total number of guests: ");
+        scanf("%d", &numGuests);
+
+        // Check if additional rooms are needed
+        if (numGuests > 2) {
+            printf("Would you like to book additional rooms for your guests? (Enter 'yes' or 'no'): ");
+            char response[10];
+            scanf("%s", response);
+
+            if (strcmp(response, "yes") == 0) {
+                int additionalRooms = (numGuests - 2) / 2;  // Calculate additional rooms needed
+                printf("Allocating %d additional rooms.\n", additionalRooms);
+
+                for (int i = 0; i < additionalRooms; i++) {
+                    // Find the next available room
+                    int additionalRoom = -1;
+                    for (int j = 0; j < 5; j++) {
+                        if ((roomType == 1 && acRooms[j] == 1) || (roomType == 2 && nonAcRooms[j] == 1)) {
+                            additionalRoom = j + 1;
+                            break;
+                        }
+                    }
+
+                    if (additionalRoom != -1) {
+                        // Additional room is available
+                        guests[additionalRoom - 1].governmentId[0] = '\0'; // Clearing governmentId for the case of multiple check-ins
+                        printf("Enter name for additional guest in Room %d: ", additionalRoom);
+                        scanf("%s", guests[additionalRoom - 1].name);
+
+                        // Update room availability
+                        if (roomType == 1) {
+                            acRooms[additionalRoom - 1] = 0;  // 0 represents booked AC room
+                        } else if (roomType == 2) {
+                            nonAcRooms[additionalRoom - 1] = 0;  // 0 represents booked non-AC room
+                        }
+
+                        printf("Guest added to Room %d.\n", additionalRoom);
+                    } else {
+                        // No additional room available
+                        printf("Sorry, no additional rooms of the selected type are available.\n");
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Update room availability for the main room
         if (roomType == 1) {
             acRooms[roomNumber - 1] = 0;  // 0 represents booked AC room
         } else if (roomType == 2) {
@@ -79,7 +129,7 @@ void checkOut(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTy
             nonAcRooms[roomNumber - 1] = 1;  // 1 represents available non-AC room
         }
 
-        printf("Checked-out successfully from Room %d.\n", roomNumber);
+        printf("Checked-out Successfully from Room %d.\n", roomNumber);
     } else {
         // Room is not booked
         printf("Room %d is not booked.\n", roomNumber);
@@ -113,7 +163,7 @@ int main() {
     int choice;
     do {
         displayMenu();
-        printf("Enter your choice: ");
+        printf("Enter Your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
