@@ -1,30 +1,32 @@
 #include <stdio.h>
+#include <string.h>
 
-// Structure to store guest details
+// Structure to represent a guest
 struct Guest {
     char name[50];
-    char PhoneNumber[15];
-    char governmentId[20];
+    char phoneNumber[15];
+    char governmentId[17];
 };
 
-// Function to initialize rooms
-void initializeRooms(int acRooms[], int nonAcRooms[], int totalRooms) {
-    for (int i = 0; i < totalRooms; i++) {
-        acRooms[i] = 1;  // 1 represents available AC room
-        nonAcRooms[i] = 1;  // 1 represents available non-AC room
+// Function to display available rooms
+void displayAvailableRooms(int acRooms[], int nonAcRooms[]) {
+    printf("Available AC Rooms: ");
+    for (int i = 0; i < 5; i++) {
+        if (acRooms[i] == 1) {
+            printf("%d ", i + 1);
+        }
     }
+    printf("\n");
+
+    printf("Available Non-AC Rooms: ");
+    for (int i = 0; i < 5; i++) {
+        if (nonAcRooms[i] == 1) {
+            printf("%d ", i + 1);
+        }
+    }
+    printf("\n");
 }
 
-// Function to display menu
-void displayMenu() {
-    printf("\n===== Welcome To Engineer's Hotel =====\n");
-    printf("1. Check-In\n");
-    printf("2. Check-Out\n");
-    printf("3. Display Available Rooms\n");
-    printf("4. Exit\n");
-}
-
-// Function to perform check-in
 // Function to perform check-in
 void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomType) {
     int roomNumber = -1;
@@ -115,83 +117,72 @@ void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTyp
 }
 
 // Function to perform check-out
-void checkOut(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomType) {
+void checkOut(int acRooms[], int nonAcRooms[], struct Guest guests[]) {
     int roomNumber;
-
     printf("Enter the room number to check-out: ");
     scanf("%d", &roomNumber);
 
-    if ((roomType == 1 && acRooms[roomNumber - 1] == 0) || (roomType == 2 && nonAcRooms[roomNumber - 1] == 0)) {
-        // Room is booked
-        if (roomType == 1) {
+    if (roomNumber >= 1 && roomNumber <= 5) {
+        if (acRooms[roomNumber - 1] == 0 || nonAcRooms[roomNumber - 1] == 0) {
+            // Room is booked, proceed with check-out
             acRooms[roomNumber - 1] = 1;  // 1 represents available AC room
-        } else if (roomType == 2) {
             nonAcRooms[roomNumber - 1] = 1;  // 1 represents available non-AC room
+            guests[roomNumber - 1].name[0] = '\0'; // Clear guest name
+            guests[roomNumber - 1].phoneNumber[0] = '\0'; // Clear guest phone number
+            guests[roomNumber - 1].governmentId[0] = '\0'; // Clear guest government ID
+            printf("Checked-out successfully from Room %d.\n", roomNumber);
+        } else {
+            // Room is not booked
+            printf("Room %d is not currently booked.\n", roomNumber);
         }
-
-        printf("Checked-out Successfully from Room %d.\n", roomNumber);
     } else {
-        // Room is not booked
-        printf("Room %d is not booked.\n", roomNumber);
-    }
-}
-
-// Function to display available rooms
-void displayAvailableRooms(int acRooms[], int nonAcRooms[], struct Guest guests[]) {
-    printf("\n===== Available Rooms =====\n");
-    for (int i = 0; i < 5; i++) {
-        if (acRooms[i] == 1) {
-            printf("AC Room %d: Available\n", i + 1);
-        } else {
-            printf("AC Room %d: Booked by %s\n", i + 1, guests[i].name);
-        }
-
-        if (nonAcRooms[i] == 1) {
-            printf("Non-AC Room %d: Available\n", i + 1);
-        } else {
-            printf("Non-AC Room %d: Booked by %s\n", i + 1, guests[i].name);
-        }
+        // Invalid room number
+        printf("Invalid room number.\n");
     }
 }
 
 int main() {
-    int acRooms[5], nonAcRooms[5];
-    struct Guest guests[10]; // Changed total rooms to 10
+    // Arrays to track room availability
+    int acRooms[5] = {1, 1, 1, 1, 1};  // 1 represents available AC room
+    int nonAcRooms[5] = {1, 1, 1, 1, 1};  // 1 represents available non-AC room
 
-    initializeRooms(acRooms, nonAcRooms, 10); // Changed total rooms to 10
+    // Array to store guest information
+    struct Guest guests[5];
 
     int choice;
     do {
-        displayMenu();
-        printf("Enter Your choice: ");
+        // Display menu
+        printf("\nHotel Management System\n");
+        printf("1. Display Available Rooms\n");
+        printf("2. Check-In\n");
+        printf("3. Check-Out\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                // Check-In
-                printf("1. AC Room\n2. Non-AC Room\n");
-                int roomType;
-                printf("Enter the room type: ");
-                scanf("%d", &roomType);
-                checkIn(acRooms, nonAcRooms, guests, roomType);
+                displayAvailableRooms(acRooms, nonAcRooms);
                 break;
             case 2:
-                // Check-Out
-                printf("1. AC Room\n2. Non-AC Room\n");
-                printf("Enter the room type: ");
+                printf("Select room type (1 for AC, 2 for Non-AC): ");
+                int roomType;
                 scanf("%d", &roomType);
-                checkOut(acRooms, nonAcRooms, guests, roomType);
+
+                if (roomType == 1 || roomType == 2) {
+                    checkIn(acRooms, nonAcRooms, guests, roomType);
+                } else {
+                    printf("Invalid choice.\n");
+                }
                 break;
             case 3:
-                // Display Available Rooms
-                displayAvailableRooms(acRooms, nonAcRooms, guests);
+                checkOut(acRooms, nonAcRooms, guests);
                 break;
             case 4:
-                // Exit
-                printf("Thank you for using the Hotel Management System. Goodbye!\n");
+                printf("Exiting program.\n");
                 break;
             default:
-                printf("Invalid choice. Please enter a valid option.\n");
+                printf("Invalid choice. Please enter a number between 1 and 4.\n");
         }
     } while (choice != 4);
 
