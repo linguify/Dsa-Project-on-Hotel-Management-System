@@ -48,7 +48,7 @@ void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTyp
         printf("Enter your phone number: ");
         scanf("%s", guests[roomNumber - 1].phoneNumber);
 
-        printf("Enter your 16-digit government ID: ");
+        printf("Enter your 12-digit Adhar Card No: ");
         scanf("%s", guests[roomNumber - 1].governmentId);
 
         if (roomType == 1) {
