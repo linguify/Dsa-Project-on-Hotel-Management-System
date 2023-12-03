@@ -18,7 +18,7 @@ void initializeRooms(int acRooms[], int nonAcRooms[], int totalRooms) {
 
 // Function to display menu
 void displayMenu() {
-    printf("\n===== Welcome to InnovateInn Lounge =====\n");
+    printf("\n===== Welcome to Engineers lounge Lounge =====\n");
     printf("1. Check-In\n");
     printf("2. Check-Out\n");
     printf("3. Display Available Rooms\n");
