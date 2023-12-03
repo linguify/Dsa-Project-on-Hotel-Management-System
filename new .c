@@ -18,7 +18,7 @@ void initializeRooms(int acRooms[], int nonAcRooms[], int totalRooms) {
 
 // Function to display menu
 void displayMenu() {
-    printf("\n===== Hotel Management System =====\n");
+    printf("\n===== Welcome to InnovateInn Lounge =====\n");
     printf("1. Check-In\n");
     printf("2. Check-Out\n");
     printf("3. Display Available Rooms\n");
@@ -64,13 +64,13 @@ void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTyp
 
                 guests[currentRoomNumber - 1].governmentId[0] = '\0'; // Clearing governmentId for the case of multiple check-ins
 
-                printf("Enter your name for Room %d: ", currentRoomNumber);
+                printf("Enter Your name for Room %d: ", currentRoomNumber);
                 scanf("%s", guests[currentRoomNumber - 1].name);
 
-                printf("Enter your phone number for Room %d: ", currentRoomNumber);
+                printf("Enter Your phone number for Room %d: ", currentRoomNumber);
                 scanf("%s", guests[currentRoomNumber - 1].phoneNumber);
 
-                printf("Enter your 12-digit Adhar Card No for Room %d: ", currentRoomNumber);
+                printf("Enter Your 12-digit Aadhar Card No for Room %d: ", currentRoomNumber);
                 scanf("%s", guests[currentRoomNumber - 1].governmentId);
 
                 if (roomType == 1) {
@@ -80,7 +80,7 @@ void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTyp
                 }
             }
 
-            printf("Checked-in successfully to Room ");
+            printf("Checked-in Successfully to Room ");
             for (int i = 0; i < roomsNeeded; i++) {
                 printf("%d ", roomNumber + i);
             }
@@ -110,7 +110,7 @@ void checkOut(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTy
             nonAcRooms[roomNumber - 1] = 1;  // 1 represents available non-AC room
         }
 
-        printf("Checked-out successfully from Room %d.\n", roomNumber);
+        printf("Checked-out Successfully from Room %d.\n", roomNumber);
     } else {
         // Room is not booked
         printf("Room %d is not booked.\n", roomNumber);
@@ -149,7 +149,7 @@ int main() {
     int choice;
     do {
         displayMenu();
-        printf("Enter your choice: ");
+        printf("Enter Your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -174,7 +174,7 @@ int main() {
                 break;
             case 4:
                 // Exit
-                printf("Thank you for using the Hotel Management System. Goodbye!\n");
+                printf("Thank you for using the InnovateInn Lounge. Goodbye!\n");
                 break;
             default:
                 printf("Invalid choice. Please enter a valid option.\n");
