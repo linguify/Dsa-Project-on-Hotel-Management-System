@@ -99,7 +99,7 @@ void checkIn(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomTyp
 void checkOut(int acRooms[], int nonAcRooms[], struct Guest guests[], int roomType) {
     int roomNumber;
 
-    printf("Enter the room number to check-out: ");
+    printf("Enter The Room number to check-out: ");
     scanf("%d", &roomNumber);
 
     if ((roomType == 1 && acRooms[roomNumber - 1] == 0) || (roomType == 2 && nonAcRooms[roomNumber - 1] == 0)) {
@@ -157,14 +157,14 @@ int main() {
                 // Check-In
                 printf("1. AC Room\n2. Non-AC Room\n");
                 int roomType;
-                printf("Enter the room type: ");
+                printf("Enter The Room type: ");
                 scanf("%d", &roomType);
                 checkIn(acRooms, nonAcRooms, guests, roomType);
                 break;
             case 2:
                 // Check-Out
                 printf("1. AC Room\n2. Non-AC Room\n");
-                printf("Enter the room type: ");
+                printf("Enter The Room type: ");
                 scanf("%d", &roomType);
                 checkOut(acRooms, nonAcRooms, guests, roomType);
                 break;
